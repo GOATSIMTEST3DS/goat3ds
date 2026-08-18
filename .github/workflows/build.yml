@@ -13,6 +13,12 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      - name: Debug toolchain
+        run: |
+          echo "DEVKITARM=$DEVKITARM"
+          which arm-none-eabi-gcc
+          find /opt/devkitpro/devkitARM -iname "*3dsx*"
+
       - name: Build .3dsx and .cia
         run: |
           make

@@ -1,7 +1,3 @@
-#---------------------------------------------------------------------------------
-# Goat Simulator - 3DS homebrew Makefile
-# Requires devkitARM + libctru + citro2d (installed via devkitPro pacman)
-#---------------------------------------------------------------------------------
 .SUFFIXES:
 
 ifeq ($(strip $(DEVKITARM)),)
@@ -11,13 +7,6 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
-#---------------------------------------------------------------------------------
-# TARGET   : name of the .3dsx / .cia output
-# BUILD    : intermediate build directory
-# SOURCES  : source code directories
-# DATA     : data directories
-# INCLUDES : include directories
-#---------------------------------------------------------------------------------
 TARGET      :=  goat3ds
 BUILD       :=  build
 SOURCES     :=  source
@@ -33,9 +22,6 @@ export BANNER_IMG   :=  $(CURDIR)/meta/banner.png
 export BANNER_AUDIO :=  $(CURDIR)/meta/banner.wav
 export RSF          :=  $(CURDIR)/meta/app.rsf
 
-#---------------------------------------------------------------------------------
-# options for code generation
-#---------------------------------------------------------------------------------
 ARCH    :=  -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
 CFLAGS  :=  -g -Wall -O2 -mword-relocations \
@@ -51,18 +37,10 @@ LDFLAGS =   -specs=3dsx_specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS    :=  -lcitro2d -lcitro3d -lctru -lm
 
-#---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level
-# containing include and lib
-#---------------------------------------------------------------------------------
+CTRULIB := $(DEVKITPRO)/libctru
 LIBDIRS := $(CTRULIB)
 
-#---------------------------------------------------------------------------------
-# no real need to edit anything past this point unless you need to add additional
-# rules for different file extensions
-#---------------------------------------------------------------------------------
 ifneq ($(BUILD),$(notdir $(CURDIR)))
-#---------------------------------------------------------------------------------
 
 export OUTPUT   :=  $(CURDIR)/$(TARGET)
 export TOPDIR   :=  $(CURDIR)
@@ -77,7 +55,6 @@ CPPFILES    :=  $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES      :=  $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES    :=  $(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
-#---------------------------------------------------------------------------------
 ifeq ($(strip $(CPPFILES)),)
     export LD   :=  $(CC)
 else
@@ -97,7 +74,6 @@ export LIBPATHS :=  $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
 .PHONY: $(BUILD) clean all
 
-#---------------------------------------------------------------------------------
 all: $(BUILD)
 
 $(BUILD):
@@ -109,22 +85,16 @@ clean:
 	@rm -fr $(BUILD) $(TARGET).3dsx $(TARGET).elf $(TARGET).smdh $(OUTPUT).3dsx \
 	        $(TARGET).cia $(TARGET).icn $(TARGET).bnr
 
-#---------------------------------------------------------------------------------
 else
 .PHONY: all
 
 DEPENDS :=  $(OFILES:.o=.d)
 
-#---------------------------------------------------------------------------------
 all  :   $(OUTPUT).3dsx
 
 $(OUTPUT).3dsx  :   $(OUTPUT).elf
 $(OUTPUT).elf   :   $(OFILES)
 
-#---------------------------------------------------------------------------------
-# CIA build - requires bannertool and makerom (devkitPro 'general-tools' package)
-#   make cia
-#---------------------------------------------------------------------------------
 .PHONY: cia
 
 cia: $(OUTPUT).cia
@@ -146,4 +116,3 @@ $(OUTPUT).cia: $(OUTPUT).elf $(OUTPUT).icn $(OUTPUT).bnr
 -include $(DEPENDS)
 
 endif
-#---------------------------------------------------------------------------------

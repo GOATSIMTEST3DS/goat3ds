@@ -13,23 +13,22 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      - name: Debug toolchain
+      - name: Find specs files
         run: |
-          echo "DEVKITARM=$DEVKITARM"
-          echo "PATH=$PATH"
-          ls $DEVKITARM/bin | head -50 || echo "no bin folder found"
+          find / -iname "*3dsx*" 2>/dev/null
+          echo "---"
+          find / -iname "*_specs*" 2>/dev/null
+          echo "---"
+          $DEVKITARM/bin/arm-none-eabi-gcc -print-search-dirs
 
-      - name: Build .3dsx and .cia
+      - name: Build .cia
         run: |
           export PATH="$DEVKITARM/bin:$PATH"
-          make
           make cia
 
       - name: Upload build output
         uses: actions/upload-artifact@v4
         with:
-          name: goat3ds-build
-          path: |
-            goat3ds.3dsx
-            goat3ds.cia
+          name: goat3ds-cia
+          path: goat3ds.cia
           if-no-files-found: error

@@ -16,11 +16,12 @@ jobs:
       - name: Debug toolchain
         run: |
           echo "DEVKITARM=$DEVKITARM"
-          which arm-none-eabi-gcc
-          find /opt/devkitpro/devkitARM -iname "*3dsx*"
+          echo "PATH=$PATH"
+          ls $DEVKITARM/bin | head -50 || echo "no bin folder found"
 
       - name: Build .3dsx and .cia
         run: |
+          export PATH="$DEVKITARM/bin:$PATH"
           make
           make cia
 

@@ -1,0 +1,76 @@
+BasicInfo:
+  Title                   : "Goat Simulator 3DS"
+  CompanyCode             : "00"
+  ProductCode              : "CTR-P-GOAT"
+  ContentType               : Application
+  Logo                       : Nintendo
+
+TitleInfo:
+  UniqueId                : 0xFF3D0
+  Category                  : Application
+
+Option:
+  UseOnSD            : true
+  FreeProductCode     : true
+  MediaFootPadding     : false
+  EnableCrypt           : false
+  EnableCompress         : true
+
+AccessControlInfo:
+  DescVersion                     : 2
+  ReleaseKernelMajor               : "02"
+  ReleaseKernelMinor               : "33"
+  MemoryType                        : Application
+  SystemModeExt                     : Legacy
+  CpuSpeed                          : 268MHz
+  EnableL2Cache                     : false
+  SystemMode                        : 64MB
+  IdealProcessor                    : 0
+  AffinityMask                      : 1
+  Priority                          : 16
+  MaxCpu                            : 0x9E
+  DisableDebug                      : true
+  EnableForceDebug                  : false
+  CanWriteSharedPage                : true
+  CanUsePrivilegedPriority          : false
+  CanUseNonAlphabetAndNumber        : true
+  PermitMainFunctionArgument        : true
+  CanShareDeviceMemory              : true
+  RunnableOnSleep                   : false
+  SpecialMemoryArrange              : true
+  ResourceLimitCategory             : Application
+
+  CoreInfo:
+    UseExtSaveData                   : false
+    SystemSaveDataId1                : 0
+    SystemSaveDataId2                : 0
+    OtherUserSaveDataId1             : 0
+    OtherUserSaveDataId2             : 0
+    OtherUserSaveDataId3             : 0
+    UseExtendedSaveDataAccessControl : false
+    FileSystemAccess:
+      - Core
+      - CtrNandRo
+      - CtrNandRw
+
+  AccessControl:
+    IdealProcessor      : 0
+    AffinityMask        : 1
+    Priority              : 16
+    MaxCpu                 : 0x9E
+    ServiceAccessControl:
+      - APT:U
+      - ac:u
+      - cfg:u
+      - dsp::DSP
+      - fs:USER
+      - gsp::Gpu
+      - hid:USER
+      - ndm:u
+      - ptm:u
+      - soc:U
+
+SystemControlInfo:
+  SaveDataSize: 0KB
+  RemasterVersion: 0
+  StackSize: 0x40000

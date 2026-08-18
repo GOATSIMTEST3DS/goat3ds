@@ -237,7 +237,7 @@ int main(int argc, char **argv) {
         C2D_TextOptimize(&scoreText);
         C2D_TextOptimize(&timeText);
 
-        C3D_FrameBegin(C3D_FRAME_SYNC);
+        C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
         // TOP SCREEN — game view
         C2D_TargetClear(top, C2D_Color32(135, 206, 235, 255));

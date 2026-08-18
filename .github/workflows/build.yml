@@ -15,10 +15,8 @@ jobs:
 
       - name: Find specs files
         run: |
-          find / -iname "*3dsx*" 2>/dev/null
-          echo "---"
-          find / -iname "*_specs*" 2>/dev/null
-          echo "---"
+          find / -iname "*3dsx_specs*" 2>/dev/null
+          echo "---search dirs---"
           $DEVKITARM/bin/arm-none-eabi-gcc -print-search-dirs
 
       - name: Build .cia
